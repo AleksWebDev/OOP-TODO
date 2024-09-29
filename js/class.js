@@ -17,18 +17,26 @@ class Todo{
         return this.items.splice(target, 1);
     }   
 
-    sortTask(){
+    sortTask(target){
         
+        const targetId = this.items.findIndex(item => {
+            if(item.id === target){
+                return true;
+            }
+        })
+
+        this.items[targetId].isChecked = !this.items[targetId].isChecked;
+        return this.items.sort((a,b) => { return a.isChecked - b.isChecked});
     }
 
     render(){
         const container = document.querySelector('.container');
         container.innerHTML = '';
         this.items.forEach(item => {
-            container.innerHTML += `<div class="task">
+            container.innerHTML += `<div class="task ${item.isChecked ? 'done' : ''}" data-id="${item.id}">
             <span class="task-id">${item.id}</span>
             <div class="task-name">${item.name}</div>
-            <input type="checkbox" class="task-check">
+            <input type="checkbox" ${item.isChecked ? 'checked' : ''} class="task-check">
             <button data-id="${item.id}" class="task-delete">Delete</button>
         </div>`
         });

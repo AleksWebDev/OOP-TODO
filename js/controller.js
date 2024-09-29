@@ -50,7 +50,10 @@ container.addEventListener('click', function(e){
     }
 
     if(e.target.classList.contains('task-check')){
-        const target = e.target;
+        const target = Number(e.target.parentNode.dataset.id);
+        const sortedTask = todo.sortTask(target)
+        todo.render(sortedTask);
+        saveToLS();
     }
 })
 
